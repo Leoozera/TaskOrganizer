@@ -1,11 +1,37 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import { Card } from "@/components/Card";
 import { Navbar } from "@/components/Navbar";
 import { Table } from "@/components/Table";
 import { Fragment } from "react";
-import { Card } from "@/components/Card";
 
-const inter = Inter({ subsets: ["latin"] });
+
+const fakeData = [
+  {
+    materia: "Python - IA & Machine Learning",
+    professor: "Professor Pedro Vidal",
+    tarefas: "1"
+  },
+  {
+    materia: "Javascript to Typescript",
+    professor: "Professor Marcelo Goes",
+    tarefas: "2"
+  },
+  {
+    materia: "Python - IA & Machine Learning",
+    professor: "Professor Leo Stronda",
+    tarefas: "2"
+  },
+  {
+    materia: "Python - IA & Machine Learning",
+    professor: "Professor Breno Massa",
+    tarefas: "10"
+  },
+  {
+    materia: "Python - IA & Machine Learning",
+    professor: "Professor José Brasilino",
+    tarefas: "2"
+  },
+]
+
 
 export default function Home() {
   return (
@@ -31,7 +57,7 @@ export default function Home() {
           </Fragment>
         </Card>
       </div>
-      <Table />
+      <Table data={fakeData}/>
     </Fragment>
   );
 }

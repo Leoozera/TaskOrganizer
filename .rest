@@ -1,0 +1,27 @@
+POST http://localhost:8080/api/registrar
+Content-Type: application/json
+
+{
+    "email": "leoozera@gmail.com",
+    "nome": "Leonard",
+    "senha": "12345678"
+}
+
+###
+
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+    "email": "leoozera@gmail.com",
+    "senha": "12345678"
+}
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsZW9vemVyYTdAZ21haWwuY29tIiwiaXNzIjoiTWV1SnVsaXVzIiwiZXhwIjoxNjkzMjU4MTMxfQ.GivoMh4Kt_KI-kE2AhFr4JBe4ucF9zRsORIGHvjy1Lg
+
+
+GET http://localhost:8080/api/materia
+Content-Type: application/json
+Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsZW9vemVyYTdAZ21haWwuY29tIiwiaXNzIjoiTWV1SnVsaXVzIiwiZXhwIjoxNjkzMjU4MTMxfQ.GivoMh4Kt_KI-kE2AhFr4JBe4ucF9zRsORIGHvjy1Lg'
+
+{}

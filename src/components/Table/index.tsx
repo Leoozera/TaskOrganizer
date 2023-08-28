@@ -5,7 +5,7 @@ import { TableRow } from "./Row";
 import { TableRowGroup } from "./RowGroup";
 
 interface TableProps {
-  data: { materia: string; professor: string; tarefas: string }[];
+  data: { nome: string; descricao: string; tarefas: string }[];
 }
 
 export const Table = ({ data }: TableProps) => {
@@ -17,7 +17,7 @@ export const Table = ({ data }: TableProps) => {
             <p>Matéria</p>
           </TableCell>
           <TableCell className="text-left">
-            <p>Professor</p>
+            <p>Descricao</p>
           </TableCell>
           <TableCell className="text-left">
             <p>Pendências</p>
@@ -36,13 +36,13 @@ export const Table = ({ data }: TableProps) => {
           >
             <TableRow>
               <TableCell>
-                <p>{result.materia}</p>
+                <p>{result.nome}</p>
               </TableCell>
               <TableCell>
-                <p>{result.professor}</p>
+                <p>{result.descricao}</p>
               </TableCell>
               <TableCell>
-                <p>{result.tarefas}</p>
+                <p>{result.tarefas ?? "Nenhuma"}</p>
               </TableCell>
               <Button label="Remover" />
             </TableRow>

@@ -5,16 +5,20 @@ import { TableRow } from "./Row";
 import { TableRowGroup } from "./RowGroup";
 
 interface TableProps {
-  data: { nome: string; descricao: string; tarefas: string }[];
+  data: { id: string, nome: string; descricao: string; tarefas: string }[];
+  onDeleteRow: (id: string) => void;
 }
 
-export const Table = ({ data }: TableProps) => {
+export const Table = ({ data, onDeleteRow }: TableProps) => {
   return (
     <div className="table w-full p-10 bg-zinc-900">
       <TableHeaderGroup>
         <TableRow>
           <TableCell className="text-left">
             <p>Matéria</p>
+          </TableCell>
+          <TableCell className="text-left">
+            <p>Identificador</p>
           </TableCell>
           <TableCell className="text-left">
             <p>Descricao</p>
@@ -39,12 +43,15 @@ export const Table = ({ data }: TableProps) => {
                 <p>{result.nome}</p>
               </TableCell>
               <TableCell>
+                <p>{result.id}</p>
+              </TableCell>
+              <TableCell>
                 <p>{result.descricao}</p>
               </TableCell>
               <TableCell>
                 <p>{result.tarefas ?? "Nenhuma"}</p>
               </TableCell>
-              <Button label="Remover" />
+              <Button label="Remover" onClick={() => onDeleteRow(result.id)}/>
             </TableRow>
           </TableRowGroup>
         );

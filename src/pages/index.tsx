@@ -1,39 +1,51 @@
+import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Navbar } from "@/components/Navbar";
 import { Table } from "@/components/Table";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 import { Fragment, useCallback, useEffect, useState } from "react";
 
-
-const userAccount = {
-  email: process.env.NEXT_PUBLIC_TEST_EMAIL!,
-  senha: process.env.NEXT_PUBLIC_TEST_PASSWORD!,
-  nome: process.env.NEXT_PUBLIC_TEST_NAME!
-}
+type Materia = { id: string, nome: string; descricao: string; tarefas: string };
 
 export default function Home() {
-  
-  const [materias, setMaterias] = useState<[]>()
+  const {getStorage} = useLocalStorage()
+
+  const [materias, setMaterias] = useState<Materia[]>()
 
   const fetchData = useCallback(async () => {
-    const accessToken = await fetch("http://localhost:8080/api/login", {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({email: userAccount.email, senha: userAccount.senha}),
-    })
-
-    const { token } = await accessToken.json()
-
     const materiasResult = await fetch("http://localhost:8080/api/materia", {
       method: 'GET',
-      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${getStorage('token')}` },
     })
     const materias = await materiasResult.json()
     setMaterias(materias)
   }, []);
 
+  const handleCreate = useCallback(async () => {
+    await fetch("http://localhost:8080/api/materia", {
+      method: 'POST',
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${getStorage('token')}` },
+      body: JSON.stringify({nome: "Nova matéria", duracao: 20, descricao: "Nova matéria"}),
+    })
+
+    location.reload()
+  }, [])
+
+  const handleDelete = useCallback(async (id: string) => {
+    await fetch("http://localhost:8080/api/materia/" + id, {
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${getStorage('token')}` },
+      body: JSON.stringify({nome: "Nova matéria", duracao: 20, descricao: "Nova matéria"}),
+    })
+    const result = materias!.filter((materia) => materia.id === id)
+    location.reload()
+  }, [])
+
+
   useEffect(() => {
     fetchData()
   }, [fetchData])
+
 
   if(!materias) return <Fragment>Loading...</Fragment>;
 
@@ -54,7 +66,8 @@ export default function Home() {
           </Fragment>
         </Card>
       </div>
-      <Table data={materias}/>
+      <Table data={materias} onDeleteRow={handleDelete}/>
+      <Button onClick={handleCreate} label="+ Adicionar matéria"  />
     </Fragment>
   );
 }
